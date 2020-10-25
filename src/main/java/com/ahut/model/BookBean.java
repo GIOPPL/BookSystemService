@@ -35,9 +35,11 @@ public class BookBean {
     private int classification;
     private int college;
     private String isbn;
-    private String u_id;
+    private String user;
+    private int status;
+    private int quantity;
 
-    public BookBean(String book_name, String author, String publisher, String publish_year, String photo_url_1, String photo_url_2, String photo_url_3, float price, float original_price, int classification, int college, String isbn, String u_id) {
+    public BookBean(String book_name, String author, String publisher, String publish_year, String photo_url_1, String photo_url_2, String photo_url_3, float price, float original_price, int classification, int college, String isbn, String user, int status, int quantity) {
         this.book_name = book_name;
         this.author = author;
         this.publisher = publisher;
@@ -50,7 +52,34 @@ public class BookBean {
         this.classification = classification;
         this.college = college;
         this.isbn = isbn;
-        this.u_id = u_id;
+        this.user = user;
+        this.status = status;
+        this.quantity = quantity;
+    }
+
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public BookBean(){}
@@ -143,19 +172,12 @@ public class BookBean {
         this.college = college;
     }
 
-    public String getSibn() {
-        return isbn;
+
+    public String getUser() {
+        return user;
     }
 
-    public void setSibn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getU_id() {
-        return u_id;
-    }
-
-    public void setU_id(String u_id) {
-        this.u_id = u_id;
+    public void setUser(String user) {
+        this.user = user;
     }
 }

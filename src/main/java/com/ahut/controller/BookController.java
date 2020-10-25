@@ -2,10 +2,10 @@ package com.ahut.controller;
 
 import com.ahut.model.BookBean;
 import com.ahut.model.BaseResponseBean;
+import com.ahut.model.SearchByStringBean;
 import com.ahut.model.User;
 import com.ahut.sql.DbHelper;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,24 +70,20 @@ public class BookController {
 
     /**
      * 查询图书通过ISBN
-     * @param isbn
+     * @param json
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/searchBookByIsbn", produces = "application/json;charset=UTF-8")
     public @ResponseBody
-    String searchBookByIsbn(@RequestBody String isbn) throws IOException {
-
+    String searchBookByIsbn(@RequestBody String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        if (isbn==null||isbn.isEmpty()){
-            BaseResponseBean<String> myResponseBean=new BaseResponseBean<>();
-            myResponseBean.setCode(300);
-            myResponseBean.setData("ISBN不能为空");
-            myResponseBean.setMsg("failure");
-            return mapper.writeValueAsString(myResponseBean);
+        if (json==null||json.isEmpty()){
+            return mapper.writeValueAsString(responseErrorMsg("ISBN不能为空"));
         }
         DbHelper.connectDB();
-        List<BookBean> mList=DbHelper.queryBookByIsbn(isbn);
+        SearchByStringBean searchByStringBean = JSON.parseObject(json, SearchByStringBean.class);
+        List<BookBean> mList=DbHelper.queryBookByIsbn(searchByStringBean.getData(),searchByStringBean.getPage());
         if (mList==null){
             BaseResponseBean<String> myResponseBean=new BaseResponseBean<>();
             myResponseBean.setCode(300);
@@ -102,6 +97,81 @@ public class BookController {
             myResponseBean.setData(mList);
             return JSON.toJSONString(myResponseBean);
         }
+    }
+
+    /**
+     * 查询一个用户的所有售卖的图书
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/searchBookByUserPhone", produces = "application/json;charset=UTF-8")
+    public @ResponseBody
+    String searchBookByUserPhone(@RequestBody String json) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        if (json==null||json.isEmpty()){
+            return mapper.writeValueAsString(responseErrorMsg("ISBN不能为空"));
+        }
+        DbHelper.connectDB();
+        SearchByStringBean searchByStringBean = JSON.parseObject(json, SearchByStringBean.class);
+        List<BookBean> mList=DbHelper.queryBookByPhone(searchByStringBean.getData(),searchByStringBean.getPage());
+        if (mList==null){
+            BaseResponseBean<String> myResponseBean=new BaseResponseBean<>();
+            myResponseBean.setCode(300);
+            myResponseBean.setData("查询失败");
+            myResponseBean.setMsg("failure");
+            return mapper.writeValueAsString(myResponseBean);
+        }else {
+            BaseResponseBean<List<BookBean>> myResponseBean=new BaseResponseBean<>();
+            myResponseBean.setCode(200);
+            myResponseBean.setMsg("success");
+            myResponseBean.setData(mList);
+            return JSON.toJSONString(myResponseBean);
+        }
+    }
+
+    /**
+     * 查询一个用户的所有售卖的图书
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/searchBookByBookName", produces = "application/json;charset=UTF-8")
+    public @ResponseBody
+    String searchBookByBookName(@RequestBody String json) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        if (json==null||json.isEmpty()){
+            return mapper.writeValueAsString(responseErrorMsg("ISBN不能为空"));
+        }
+        DbHelper.connectDB();
+        SearchByStringBean searchByStringBean = JSON.parseObject(json, SearchByStringBean.class);
+        List<BookBean> mList=DbHelper.queryBookByBookName(searchByStringBean.getData(),searchByStringBean.getPage());
+        if (mList==null){
+            BaseResponseBean<String> myResponseBean=new BaseResponseBean<>();
+            myResponseBean.setCode(300);
+            myResponseBean.setData("查询失败");
+            myResponseBean.setMsg("failure");
+            return mapper.writeValueAsString(myResponseBean);
+        }else {
+            BaseResponseBean<List<BookBean>> myResponseBean=new BaseResponseBean<>();
+            myResponseBean.setCode(200);
+            myResponseBean.setMsg("success");
+            myResponseBean.setData(mList);
+            return JSON.toJSONString(myResponseBean);
+        }
+    }
+
+    /**
+     * 包装错误信息
+     * @param msg 错误信息
+     * @return BaseResponseBean
+     */
+    public static BaseResponseBean<String> responseErrorMsg(String msg){
+        BaseResponseBean<String> errorResponseBean=new BaseResponseBean<>();
+        errorResponseBean.setCode(300);
+        errorResponseBean.setData(msg);
+        errorResponseBean.setMsg("failure");
+        return errorResponseBean;
     }
 
 }
