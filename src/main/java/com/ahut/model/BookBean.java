@@ -20,7 +20,7 @@ public class BookBean {
      * classification : 1
      * price : 12.3
      * college : 1
-     * sibn : 12345667
+     * isbn : 12345667
      */
 
     private String book_name;
@@ -30,12 +30,30 @@ public class BookBean {
     private String photo_url_1;
     private String photo_url_2;
     private String photo_url_3;
-    private double price;
-    private double original_price;
+    private float price;
+    private float original_price;
     private int classification;
     private int college;
-    private String sibn;
+    private String isbn;
     private String u_id;
+
+    public BookBean(String book_name, String author, String publisher, String publish_year, String photo_url_1, String photo_url_2, String photo_url_3, float price, float original_price, int classification, int college, String isbn, String u_id) {
+        this.book_name = book_name;
+        this.author = author;
+        this.publisher = publisher;
+        this.publish_year = publish_year;
+        this.photo_url_1 = photo_url_1;
+        this.photo_url_2 = photo_url_2;
+        this.photo_url_3 = photo_url_3;
+        this.price = price;
+        this.original_price = original_price;
+        this.classification = classification;
+        this.college = college;
+        this.isbn = isbn;
+        this.u_id = u_id;
+    }
+
+    public BookBean(){}
 
     public String getBook_name() {
         return book_name;
@@ -93,11 +111,11 @@ public class BookBean {
         this.photo_url_3 = photo_url_3;
     }
 
-    public double getOriginal_price() {
+    public float getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(double original_price) {
+    public void setOriginal_price(float original_price) {
         this.original_price = original_price;
     }
 
@@ -109,11 +127,11 @@ public class BookBean {
         this.classification = classification;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -126,11 +144,11 @@ public class BookBean {
     }
 
     public String getSibn() {
-        return sibn;
+        return isbn;
     }
 
-    public void setSibn(String sibn) {
-        this.sibn = sibn;
+    public void setSibn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getU_id() {

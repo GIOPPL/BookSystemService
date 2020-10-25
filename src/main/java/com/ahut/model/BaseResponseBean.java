@@ -5,10 +5,17 @@ package com.ahut.model;
  * on 2020/10/24 21:49
  * TODO:
  */
-public class MyResponseBean<T> {
+public class BaseResponseBean<T> {
     private int code;
     private T data;
     private String msg;
+
+    public BaseResponseBean(T data) {
+        this.data = data;
+    }
+    public BaseResponseBean(){
+
+    }
 
     public int getCode() {
         return code;
