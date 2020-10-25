@@ -1,4 +1,4 @@
-package com.ahut;
+package com.ahut.model;
 
 /**
  * Created by GIOPPL

@@ -1,5 +1,9 @@
-package com.ahut;
+package com.ahut.controller;
 
+import com.ahut.model.BookBean;
+import com.ahut.model.MyResponseBean;
+import com.ahut.model.User;
+import com.ahut.sql.DbHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +19,9 @@ import java.util.Map;
  * TODO:用户的控制器
  */
 @Controller
-@RequestMapping(name = "user")
+@RequestMapping(value = "/user")
 public class UserController {
+
     @RequestMapping(value = "/PoseDemo", produces = "application/json;charset=UTF-8")
     public @ResponseBody
     String checkNameValidMethod2(@RequestBody String json) throws IOException {
@@ -29,4 +34,6 @@ public class UserController {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(map);
     }
+
+
 }
